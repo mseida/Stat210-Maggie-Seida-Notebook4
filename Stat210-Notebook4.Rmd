@@ -1,0 +1,146 @@
+---
+title: "R Notebook"
+author: Maggie Seida
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+library(tidyverse)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+ggplot(data = mpg) + 
+  GEOM_FUNCTION>(mapping = aes(<MAPPINGS>)) #this is a template code for aking graphs with ggplot2 #this is a template code for aking graphs with ggplot2
+```{r}
+
+#3.2.4
+ggplot(data=mpg)
+head(mpg)
+mpg
+#there are 234 rows and 7 columns
+?mpg 
+#drv is the type of drive--f=front-wheel drive, r=rear, 4=4wd
+ggplot(data=mpg)+
+  geom_point(mapping = aes(x=hwy, y=cyl))
+
+ggplot(data=mpg)+
+  geom_point(mapping = aes(x=class, y=drv)) #this isn't helpful because it doesn't give us any information about gas mileage
+```
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) #can add extentions on to manipulate how class is differentiated--or any third variable that could provide insight into data trends  
+#alpha aesthetic controls the transparency of the points  
+#shape aesthetic controls the shape of the points (ggplot2 will only use six shapes at a time. By default, additional groups will go unplotted when you use the shape aesthetic)
+```
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
+#the color isn't blue bc the aesthetic is inside the aes() and it needs to be outside
+?mpg
+mpg
+#the categorical values are model, manufacturer, transmission, and drive and the continuous variableis the displacement.
+?geom_point
+ggplot(data=mpg) +
+  geom_point(aes (x=displ, y = hwy, stroke = stroke))
+?stroke
+#a bit of problem on this one... not sure what to set stroke = to 
+```
+common problem includes misplacement of +, always has to go on first line not at beginning of second
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(drv ~ cyl)
+#facets are another way to add variables and to break data into subsets
+```
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = cyl, y = hwy)) +
+  facet_wrap(~ displ)
+```
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = drv, y = cyl))
+#cells become empty when there is no data correlating to that combination
+```
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+#the dot plots without a column and repeats the y axis is repeated. In the second there is no row and the x axis is repeated. 
+```
+#with other geometric objects you can smooth data, find trendlines, and compress data and neaten it  
+#you can also smooth certain points based on variable type or value to create different trendlines within a set of data  
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+              
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+    
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, color = drv),
+              show.legend = FALSE)
+```
+
+#I would use the geom smooth plot to draw a line plot.
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+  
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(aes(x = displ, y = hwy, color = drv),
+  show.legend = FALSE)
+# using the code show.legend = FALSE hides the legend
+```
+
+```{r}
+ggplot(data = diamonds) +
+  stat_summary(mapping = aes(x = cut, y = depth), stat="summary",
+    fun.ymin = min, fun.ymax = max, fun.y = median)
+
+```
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+```
+
+#not understanding error code for 3.8 exercises 
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot()
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot() +
+  coord_flip()
+```
+#coord_flip is SO HELPFUL!
+
+
